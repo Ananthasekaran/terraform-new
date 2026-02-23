@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_key_pair" "deployer" {
   key_name   = "terraform-key"
-  public_key = file("/root/.ssh/id_rsa.pub")
+  public_key = file("/var/lib/jenkins/.ssh/id_rsa.pub")
 }
 
 resource "aws_security_group" "allow_ports" {
