@@ -4,7 +4,7 @@ provider "aws" {
 
 resource "aws_key_pair" "deployer" {
   key_name   = "terraform-key"
-  public_key = file("/home/ananth123/.ssh/id_rsa.pub")
+  public_key = file("/root/.ssh/id_rsa.pub")
 }
 
 resource "aws_security_group" "allow_ports" {
@@ -50,7 +50,7 @@ resource "aws_instance" "ubuntu" {
   security_groups = [aws_security_group.allow_ports.name]
 
   tags = {
-    Name = "Terraform-Server"
+    Name = "Ananth-EC2"
   }
 }
 output "instance_public_ip" {
