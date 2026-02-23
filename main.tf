@@ -3,12 +3,12 @@ provider "aws" {
 }
 
 resource "aws_key_pair" "deployer" {
-  key_name   = "terraform-key"
+  key_name   = "new"
   public_key = file("/var/lib/jenkins/.ssh/id_rsa.pub")
 }
 
 resource "aws_security_group" "allow_ports" {
-  name = "allow_ssh_http"
+  name = "allow_ssh_http_new"
 
   ingress {
     description = "SSH"
