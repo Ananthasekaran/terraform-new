@@ -5,14 +5,14 @@ provider "aws" {
 # ------------------ KEY PAIR ------------------
 
 resource "aws_key_pair" "deployer" {
-  key_name   = "news"
+  key_name   = "newss"
   public_key = file("${path.module}/id_rsa.pub")
 }
 
 # ------------------ SECURITY GROUP ------------------
 
 resource "aws_security_group" "allow_ports" {
-  name        = "allow_ssh_http_news"
+  name        = "allow_ssh_http_newss"
   description = "Allow SSH, HTTP, and Jenkins"
 
   ingress {
