@@ -3,12 +3,12 @@ provider "aws" {
 }
 
 resource "aws_key_pair" "deployer" {
-  key_name   = "new"
-  public_key = file("/var/lib/jenkins/.ssh/id_rsa.pub")
+  key_name   = "news"
+  public_key = file("/home/ananth123/.ssh/id_rsa.pub")
 }
 
 resource "aws_security_group" "allow_ports" {
-  name = "allow_ssh_http_new"
+  name = "allow_ssh_http_news"
 
   ingress {
     description = "SSH"
