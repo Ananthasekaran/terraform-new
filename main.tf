@@ -2,13 +2,18 @@ provider "aws" {
   region = "ap-south-1"   # Mumbai region
 }
 
+# ------------------ KEY PAIR ------------------
+
 resource "aws_key_pair" "deployer" {
   key_name   = "news"
-  public_key = file("/root/.ssh/id_rsa.pub")
+  public_key = file("${path.module}/id_rsa.pub")
 }
 
+# ------------------ SECURITY GROUP ------------------
+
 resource "aws_security_group" "allow_ports" {
-  name = "allow_ssh_http_news"
+  name        = "allow_ssh_http_news"
+  description = "Allow SSH, HTTP, and Jenkins"
 
   ingress {
     description = "SSH"
@@ -40,19 +45,28 @@ resource "aws_security_group" "allow_ports" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name = "Ananth-SG"
+  }
 }
 
+# ------------------ EC2 INSTANCE ------------------
+
 resource "aws_instance" "ubuntu" {
-  ami           = "ami-0f5ee92e2d63afc18"  # Ubuntu 22.04 (Mumbai)
+  ami           = "ami-0f5ee92e2d63afc18"  # Ubuntu 22.04 Mumbai
   instance_type = "t3.micro"
 
   key_name        = aws_key_pair.deployer.key_name
-  security_groups = [aws_security_group.allow_ports.name]
+  vpc_security_group_ids = [aws_security_group.allow_ports.id]
 
   tags = {
     Name = "Ananth-EC2"
   }
 }
+
+# ------------------ OUTPUTS ------------------
+
 output "instance_public_ip" {
   value = aws_instance.ubuntu.public_ip
 }
